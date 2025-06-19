@@ -26,7 +26,7 @@ jobs:
           ./autogen.sh 
           ./configure --prefix=/usr/local 
           make -j$(nproc) 
-          make install 
+          sudo make install 
           rm -rf /tmp/swig
 
       - name: Steup latest Cmake
@@ -35,10 +35,10 @@ jobs:
           gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null 
           echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main'  
           tee /etc/apt/sources.list.d/kitware.list >/dev/null 
-          apt-get update 
-          apt-get install -y --no-install-recommends cmake 
-          apt-get clean 
-          rm -rf /var/lib/apt/lists/*
+          sudo apt-get update 
+          sudo apt-get install -y --no-install-recommends cmake 
+          sudo apt-get clean 
+          sudo rm -rf /var/lib/apt/lists/*
 
       - name: Setup Picker
         run: |
@@ -50,9 +50,9 @@ jobs:
           rm verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
           cd picker && make init 
           make -j$(nproc) 
-          make install 
+          sudo make install 
           make clean 
-          chmod 755 /usr/local/bin -R
+          sudo chmod 755 /usr/local/bin -R
 
       - name: Setup Clang 17
         run: |
