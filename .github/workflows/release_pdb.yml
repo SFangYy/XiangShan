@@ -1,4 +1,4 @@
-name: Release Jobs
+name: Release XSPdb Jobs
 
 on:
   push:
