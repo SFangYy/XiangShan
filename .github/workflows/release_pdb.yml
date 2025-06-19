@@ -19,6 +19,41 @@ jobs:
       - name: init
         run: make init
 
+      - name: Setup Swig
+        run: |
+          git clone https://github.com/swig/swig.git -b v4.2.1 --depth=1 /tmp/swig 
+          cd /tmp/swig 
+          ./autogen.sh 
+          ./configure --prefix=/usr/local 
+          make -j$(nproc) 
+          make install 
+          rm -rf /tmp/swig
+
+      - name: Steup latest Cmake
+        run: |
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null 
+          gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null 
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main'  
+          tee /etc/apt/sources.list.d/kitware.list >/dev/null 
+          apt-get update 
+          apt-get install -y --no-install-recommends cmake 
+          apt-get clean 
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Setup Picker
+        run: |
+          RUN mkdir /workspace 
+          cd /workspace 
+          git clone https://github.com/XS-MLVP/picker.git --depth=1 
+          wget https://github.com/chipsalliance/verible/releases/download/v0.0-3979-g786edf03/verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
+          tar -xzf verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz -C /usr/local/ --strip-components=1 
+          rm verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
+          cd picker && make init 
+          make -j$(nproc) 
+          make install 
+          make clean 
+          chmod 755 /usr/local/bin -R
+
       - name: Setup Clang 17
         run: |
           wget https://apt.llvm.org/llvm.sh
