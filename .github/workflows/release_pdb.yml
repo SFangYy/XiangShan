@@ -75,4 +75,6 @@ jobs:
           git clone https://github.com/SFangYy/difftest.git ../../difftest
 
 
-
+      - name: build XSPdb
+        run: |
+          make
