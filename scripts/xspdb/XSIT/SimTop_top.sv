@@ -34,130 +34,130 @@ module SimTop_top();
  );
 
 
-  export "DPI-C" function get_clockxxPfBDHPPZEux;
-  export "DPI-C" function set_clockxxPfBDHPPZEux;
-  export "DPI-C" function get_resetxxPfBDHPPZEux;
-  export "DPI-C" function set_resetxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_exitxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_stepxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_perfCtrl_cleanxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_perfCtrl_cleanxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_perfCtrl_dumpxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_perfCtrl_dumpxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_logCtrl_beginxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_logCtrl_beginxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_logCtrl_endxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_logCtrl_endxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_logCtrl_levelxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_logCtrl_levelxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_uart_out_validxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_uart_out_chxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_uart_in_validxxPfBDHPPZEux;
-  export "DPI-C" function get_difftest_uart_in_chxxPfBDHPPZEux;
-  export "DPI-C" function set_difftest_uart_in_chxxPfBDHPPZEux;
+  export "DPI-C" function get_clockxxPfBDHO7EfNI;
+  export "DPI-C" function set_clockxxPfBDHO7EfNI;
+  export "DPI-C" function get_resetxxPfBDHO7EfNI;
+  export "DPI-C" function set_resetxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_exitxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_stepxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_perfCtrl_cleanxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_perfCtrl_cleanxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_perfCtrl_dumpxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_perfCtrl_dumpxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_logCtrl_beginxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_logCtrl_beginxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_logCtrl_endxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_logCtrl_endxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_logCtrl_levelxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_logCtrl_levelxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_uart_out_validxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_uart_out_chxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_uart_in_validxxPfBDHO7EfNI;
+  export "DPI-C" function get_difftest_uart_in_chxxPfBDHO7EfNI;
+  export "DPI-C" function set_difftest_uart_in_chxxPfBDHO7EfNI;
 
 
-  function void get_clockxxPfBDHPPZEux;
+  function void get_clockxxPfBDHO7EfNI;
     output logic  value;
     value=clock;
   endfunction
 
-  function void set_clockxxPfBDHPPZEux;
+  function void set_clockxxPfBDHO7EfNI;
     input logic  value;
     clock=value;
   endfunction
 
-  function void get_resetxxPfBDHPPZEux;
+  function void get_resetxxPfBDHO7EfNI;
     output logic  value;
     value=reset;
   endfunction
 
-  function void set_resetxxPfBDHPPZEux;
+  function void set_resetxxPfBDHO7EfNI;
     input logic  value;
     reset=value;
   endfunction
 
-  function void get_difftest_exitxxPfBDHPPZEux;
+  function void get_difftest_exitxxPfBDHO7EfNI;
     output logic [63:0] value;
     value=difftest_exit;
   endfunction
 
-  function void get_difftest_stepxxPfBDHPPZEux;
+  function void get_difftest_stepxxPfBDHO7EfNI;
     output logic [63:0] value;
     value=difftest_step;
   endfunction
 
-  function void get_difftest_perfCtrl_cleanxxPfBDHPPZEux;
+  function void get_difftest_perfCtrl_cleanxxPfBDHO7EfNI;
     output logic  value;
     value=difftest_perfCtrl_clean;
   endfunction
 
-  function void set_difftest_perfCtrl_cleanxxPfBDHPPZEux;
+  function void set_difftest_perfCtrl_cleanxxPfBDHO7EfNI;
     input logic  value;
     difftest_perfCtrl_clean=value;
   endfunction
 
-  function void get_difftest_perfCtrl_dumpxxPfBDHPPZEux;
+  function void get_difftest_perfCtrl_dumpxxPfBDHO7EfNI;
     output logic  value;
     value=difftest_perfCtrl_dump;
   endfunction
 
-  function void set_difftest_perfCtrl_dumpxxPfBDHPPZEux;
+  function void set_difftest_perfCtrl_dumpxxPfBDHO7EfNI;
     input logic  value;
     difftest_perfCtrl_dump=value;
   endfunction
 
-  function void get_difftest_logCtrl_beginxxPfBDHPPZEux;
+  function void get_difftest_logCtrl_beginxxPfBDHO7EfNI;
     output logic [63:0] value;
     value=difftest_logCtrl_begin;
   endfunction
 
-  function void set_difftest_logCtrl_beginxxPfBDHPPZEux;
+  function void set_difftest_logCtrl_beginxxPfBDHO7EfNI;
     input logic [63:0] value;
     difftest_logCtrl_begin=value;
   endfunction
 
-  function void get_difftest_logCtrl_endxxPfBDHPPZEux;
+  function void get_difftest_logCtrl_endxxPfBDHO7EfNI;
     output logic [63:0] value;
     value=difftest_logCtrl_end;
   endfunction
 
-  function void set_difftest_logCtrl_endxxPfBDHPPZEux;
+  function void set_difftest_logCtrl_endxxPfBDHO7EfNI;
     input logic [63:0] value;
     difftest_logCtrl_end=value;
   endfunction
 
-  function void get_difftest_logCtrl_levelxxPfBDHPPZEux;
+  function void get_difftest_logCtrl_levelxxPfBDHO7EfNI;
     output logic [63:0] value;
     value=difftest_logCtrl_level;
   endfunction
 
-  function void set_difftest_logCtrl_levelxxPfBDHPPZEux;
+  function void set_difftest_logCtrl_levelxxPfBDHO7EfNI;
     input logic [63:0] value;
     difftest_logCtrl_level=value;
   endfunction
 
-  function void get_difftest_uart_out_validxxPfBDHPPZEux;
+  function void get_difftest_uart_out_validxxPfBDHO7EfNI;
     output logic  value;
     value=difftest_uart_out_valid;
   endfunction
 
-  function void get_difftest_uart_out_chxxPfBDHPPZEux;
+  function void get_difftest_uart_out_chxxPfBDHO7EfNI;
     output logic [7:0] value;
     value=difftest_uart_out_ch;
   endfunction
 
-  function void get_difftest_uart_in_validxxPfBDHPPZEux;
+  function void get_difftest_uart_in_validxxPfBDHO7EfNI;
     output logic  value;
     value=difftest_uart_in_valid;
   endfunction
 
-  function void get_difftest_uart_in_chxxPfBDHPPZEux;
+  function void get_difftest_uart_in_chxxPfBDHO7EfNI;
     output logic [7:0] value;
     value=difftest_uart_in_ch;
   endfunction
 
-  function void set_difftest_uart_in_chxxPfBDHPPZEux;
+  function void set_difftest_uart_in_chxxPfBDHO7EfNI;
     input logic [7:0] value;
     difftest_uart_in_ch=value;
   endfunction
@@ -169,8 +169,8 @@ module SimTop_top();
     $dumpvars(0, SimTop_top);
   end
 
-  export "DPI-C" function finish_PfBDHPPZEux;
-  function void finish_PfBDHPPZEux;
+  export "DPI-C" function finish_PfBDHO7EfNI;
+  function void finish_PfBDHO7EfNI;
     $finish;
   endfunction
 

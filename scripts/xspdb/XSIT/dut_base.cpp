@@ -77,7 +77,7 @@ int DutVcsBase::Step(uint64_t ncycle, bool dump)
 int DutVcsBase::Finish()
 {
     // Finish VCS context
-    finish_PfBDHPPZEux();
+    finish_PfBDHO7EfNI();
     return 0;
 };
 
@@ -657,9 +657,9 @@ uint64_t DutUnifiedBase::GetDPIHandle(char *name, int towards)
 {
     char *func_name = (char *)malloc(strlen(name) + 128);
     if (towards == 0) {
-        sprintf(func_name, "get_%sxxPfBDHPPZEux", name);
+        sprintf(func_name, "get_%sxxPfBDHO7EfNI", name);
     } else if (towards == 1) {
-        sprintf(func_name, "set_%sxxPfBDHPPZEux", name);
+        sprintf(func_name, "set_%sxxPfBDHO7EfNI", name);
     } else if (towards == -1) {
         strcpy(func_name, name);
     } else {

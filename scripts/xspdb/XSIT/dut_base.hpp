@@ -69,7 +69,7 @@ extern "C" {
 int VcsMain(int argc, char **argv);
 void VcsInit();
 void VcsSimUntil(uint64_t *);
-void finish_PfBDHPPZEux();
+void finish_PfBDHO7EfNI();
 }
 #include "vc_hdrs.h"
 

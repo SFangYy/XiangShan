@@ -35,4 +35,11 @@ jobs:
           sed -i 's/make -j8/make -j4/g' install-verilator.sh
           sudo bash install-verilator.sh
 
+      - name: init XSDebugger
+        run: |
+          cd scripts/xspdb/
+          rm -rf ../../difftest
+          git clone https://github.com/SFangYy/difftest.git ../../difftest
+
+
 
