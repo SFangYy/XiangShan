@@ -1,0 +1,38 @@
+name: Release Jobs
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-xsdev-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: init
+        run: make init
+
+      - name: Setup Clang 17
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod u+x llvm.sh
+          sudo ./llvm.sh 17
+
+      - name: Setup Verilator
+        run: |
+          wget https://raw.githubusercontent.com/OpenXiangShan/xs-env/master/install-verilator.sh
+          chmod u+x install-verilator.sh
+          sed -i 's/CC=clang/CC=clang-17/g' install-verilator.sh
+          sed -i 's/CXX=clang++/CXX=clang++-17/g' install-verilator.sh
+          sed -i 's/LINK=clang++/LINK=clang++-17/g' install-verilator.sh
+          sed -i 's/make -j8/make -j4/g' install-verilator.sh
+          sudo bash install-verilator.sh
+
+
