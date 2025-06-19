@@ -50,7 +50,6 @@ jobs:
           cd picker && make init 
           sudo make -j$(nproc) 
           sudo make install 
-          make clean 
           sudo chmod 755 /usr/local/bin -R
 
       - name: Setup Clang 17
