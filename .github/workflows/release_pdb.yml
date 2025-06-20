@@ -71,11 +71,6 @@ jobs:
       - name: Setup Scala
         uses: olafurpg/setup-scala@v10
 
-      - name: Setup Mill
-        uses: jodersky/setup-mill@v0.3.0
-        with:
-          mill-version: 0.12.3
-
       - name: init XSDebugger
         run: |
           cd scripts/xspdb/
