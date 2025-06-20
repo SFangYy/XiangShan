@@ -76,7 +76,7 @@ jobs:
 
       - name: Check Java Version # 验证当前 Java 版本是否正确
         run: java -version
-        
+
       - name: Setup Scala
         uses: olafurpg/setup-scala@v10
 
@@ -87,9 +87,9 @@ jobs:
           git clone https://github.com/SFangYy/difftest.git ../../difftest
 
       - name: Setup mill
-        uses: jodersky/setup-mill@v0.3.0
+        uses: jodersky/setup-mill@v0.2.3
         with:
-          mill-version: 0.12.3
+          mill-version: 0.11.1
 
       - name: build XSPdb
         run: |
