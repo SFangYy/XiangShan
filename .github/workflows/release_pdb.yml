@@ -73,7 +73,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-          cache: 'mill'
 
       - name: Setup Scala
         uses: olafurpg/setup-scala@v10
