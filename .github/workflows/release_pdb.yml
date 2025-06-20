@@ -19,38 +19,38 @@ jobs:
       - name: init
         run: make init
 
-      - name: Setup Swig
-        run: |
-          git clone https://github.com/swig/swig.git -b v4.2.1 --depth=1 /tmp/swig 
-          cd /tmp/swig 
-          ./autogen.sh 
-          ./configure --prefix=/usr/local 
-          make -j$(nproc) 
-          sudo make install 
-          rm -rf /tmp/swig
+      # - name: Setup Swig
+      #   run: |
+      #     git clone https://github.com/swig/swig.git -b v4.2.1 --depth=1 /tmp/swig 
+      #     cd /tmp/swig 
+      #     ./autogen.sh 
+      #     ./configure --prefix=/usr/local 
+      #     make -j$(nproc) 
+      #     sudo make install 
+      #     rm -rf /tmp/swig
 
-      - name: Steup latest Cmake
-        run: |
-          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null 
-          sudo gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null 
-          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main'  
-          sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null 
-          sudo apt-get update 
-          sudo apt-get install -y --no-install-recommends cmake 
-          sudo apt-get clean 
-          sudo rm -rf /var/lib/apt/lists/*
+      # - name: Steup latest Cmake
+      #   run: |
+      #     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null 
+      #     sudo gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null 
+      #     echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main'  
+      #     sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null 
+      #     sudo apt-get update 
+      #     sudo apt-get install -y --no-install-recommends cmake 
+      #     sudo apt-get clean 
+      #     sudo rm -rf /var/lib/apt/lists/*
 
-      - name: Setup Picker
-        run: | 
-          git clone https://github.com/XS-MLVP/picker.git --depth=1 /tmp/picker
-          cd /tmp
-          wget https://github.com/chipsalliance/verible/releases/download/v0.0-3979-g786edf03/verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
-          sudo tar -xzf verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz -C /usr/local/ --strip-components=1 
-          rm verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
-          cd picker && make init 
-          sudo make -j$(nproc) 
-          sudo make install 
-          sudo chmod 755 /usr/local/bin -R
+      # - name: Setup Picker
+      #   run: | 
+      #     git clone https://github.com/XS-MLVP/picker.git --depth=1 /tmp/picker
+      #     cd /tmp
+      #     wget https://github.com/chipsalliance/verible/releases/download/v0.0-3979-g786edf03/verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
+      #     sudo tar -xzf verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz -C /usr/local/ --strip-components=1 
+      #     rm verible-v0.0-3979-g786edf03-linux-static-x86_64.tar.gz 
+      #     cd picker && make init 
+      #     sudo make -j$(nproc) 
+      #     sudo make install 
+      #     sudo chmod 755 /usr/local/bin -R
 
       - name: Setup Clang 17
         run: |
@@ -67,6 +67,11 @@ jobs:
           sed -i 's/LINK=clang++/LINK=clang++-17/g' install-verilator.sh
           sed -i 's/make -j8/make -j4/g' install-verilator.sh
           sudo bash install-verilator.sh
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
 
       - name: Setup Scala
         uses: olafurpg/setup-scala@v10
