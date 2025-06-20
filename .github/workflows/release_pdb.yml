@@ -85,11 +85,14 @@ jobs:
           cd scripts/xspdb/
           rm -rf ../../difftest
           git clone https://github.com/SFangYy/difftest.git ../../difftest
+      
+      - name: psutil
+        run: sudo apt install python3-psutil
 
       - name: Setup mill
-        uses: jodersky/setup-mill@v0.2.3
+        uses: jodersky/setup-mill@v0.3.0
         with:
-          mill-version: 0.11.1
+          mill-version: 0.12.3
 
       - name: build XSPdb
         run: |
