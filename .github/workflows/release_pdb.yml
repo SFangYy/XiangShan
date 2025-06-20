@@ -77,6 +77,10 @@ jobs:
           rm -rf ../../difftest
           git clone https://github.com/SFangYy/difftest.git ../../difftest
 
+      - name: mill
+        uses: jodersky/setup-mill@v0.3.0
+        with:
+          mill-version: 0.12.3
 
       - name: build XSPdb
         run: |
