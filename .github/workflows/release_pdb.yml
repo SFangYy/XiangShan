@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-xsdev-image:
+  build-xpdb-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
