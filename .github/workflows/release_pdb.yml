@@ -74,8 +74,6 @@ jobs:
       - name: Check Java Version # 验证当前 Java 版本是否正确
         run: java -version
 
-      - name: Setup Scala
-        uses: olafurpg/setup-scala@v10
 
       - name: init XSDebugger
         run: |
