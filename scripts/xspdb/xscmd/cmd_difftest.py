@@ -326,3 +326,102 @@ class CmdDiffTest:
         """
         return self.df.GetDifftest(instance)
 
+    def do_xexpdiffstate(self, var):
+        """Set a variable to difftest_stat
+
+        Args:
+            var (string): Variable name
+        """
+        self.curframe.f_locals[var] = self.difftest_stat
+
+    def do_xwatch_commit_pc(self, arg):
+        """Watch commit PC
+
+        Args:
+            arg (address): PC address
+        """
+        if arg.strip() == "update":
+            checker = self.condition_watch_commit_pc.get("checker")
+            if checker:
+                checker.Reset()
+            return
+        try:
+            address = int(arg, 0)
+        except Exception as e:
+            error(f"convert {arg} to number fail: {str(e)}")
+            return
+
+        if not self.condition_watch_commit_pc.get("checker"):
+            checker = self.xsp.ComUseCondCheck(self.dut.xclock)
+            cmtpccmp = self.xsp.ComUseRangeCheck(6, 8);
+            self.condition_watch_commit_pc["checker"] = checker
+            self.condition_watch_commit_pc["cmtpcmp"] = cmtpccmp
+
+        checker = self.condition_watch_commit_pc["checker"]
+        if "watch_pc_0x%x_0"%address not in checker.ListCondition():
+            cmtpccmp = self.condition_watch_commit_pc["cmtpcmp"]
+            target_pc = self.xsp.ComUseDataArray(8)
+            target_pc.FromBytes(address.to_bytes(8, byteorder='little', signed=False))
+            pc_lst_list = [self.xsp.ComUseDataArray(self.difftest_stat.get_commit(i).get_pc_address(), 8) for i in range(8)]
+            for i, lpc in enumerate(pc_lst_list):
+                checker.SetCondition("watch_pc_0x%x_%d" % (address, i), lpc.BaseAddr(), target_pc.BaseAddr(), self.xsp.ComUseCondCmp_GE, 8,
+                                     0, 0, 1, cmtpccmp.GetArrayCmp(), cmtpccmp.CSelf())
+            checker.SetMaxCbs(1)
+            self.condition_watch_commit_pc["0x%x"%address] = {"pc_lst_list": pc_lst_list, "target_pc": target_pc}
+        else:
+            error(f"watch_commit_pc 0x{address:x} already exists")
+            return
+        cb_key = "watch_commit_pc"
+        self.dut.xclock.RemoveStepRisCbByDesc(cb_key)
+        self.dut.xclock.StepRis(checker.GetCb(), checker.CSelf(), cb_key)
+        message(f"watch commit pc: 0x{address:x}")
+
+    def do_xdifftest_display(self, arg):
+        """Display the difftest status
+
+        Args:
+            arg (number): difftest instance to display, default is 0
+        """
+        instance = 0
+        if arg.strip():
+            try:
+                instance = int(arg)
+            except Exception as e:
+                error(f"convert {arg} to number fail: {str(e)}\n useage: xdifftest_display [instance]")
+                return
+        if not self.difftest_ref_is_inited:
+            error("difftest reference not inited")
+            return
+        x = self.api_difftest_get_instance(instance)
+        if x:
+            x.display()
+        else:
+            error(f"difftest instance {instance} not found")
+
+    def do_xdifftest_pmem_base_first_instr_address(self, arg):
+        """Display or set PMEM_BASE, FIRST_INST_ADDRESS
+
+        Args:
+            PMEM_BASE (int): PMEM_BASE value default None
+            FIRST_INST_ADDRESS (int): FIRST_INST_ADDRESS value default None
+        """
+        a, b = None, None
+        str_usage = "usage xdifftest_pmem_base_first_instr_address [PMEM_BASE FIRST_INST_ADDRESS]"
+        if arg.strip():
+            args = arg.split()
+            if len(args) != 2:
+                error(str_usage)
+                return
+            try:
+                a, b = int(args[0], 0), int(args[1], 0)
+            except Exception as e:
+                error("Error: %s\n%s"%(e, str_usage))
+                return
+        x, y = self.api_update_pmem_base_and_first_inst_addr(a, b)
+        if (a is not None) and (b is not None):
+            message("PMEM_BASE = %s, FIRST_INST_ADDRESS = %s" % (hex(x), hex(y)))
+        elif (a and a != x) or (b and b != y):
+            error("Set PMEM_BASE(%s != %s), FIRST_INST_ADDRESS(%s != %s) fail!" % (a, x, b, y))
+        else:
+            message("PMEM_BASE = %s, FIRST_INST_ADDRESS = %s" % (hex(x), hex(y)))
+            error(str_usage)
