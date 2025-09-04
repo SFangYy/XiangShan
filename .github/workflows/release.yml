@@ -44,3 +44,61 @@ jobs:
           push: ${{ github.ref == 'refs/heads/master' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+
+jobs:
+  build-xspdb:
+    runs-on: bosc
+    container: ghcr.io/openxiangshan/xspdb:build-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set env
+        run: |
+          echo "NOOP_HOME=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+      - name: submodule init
+        run: make init
+      - name: setup mill
+        uses: jodersky/setup-mill@v0.3.0
+        with:
+          mill-version: 0.12.3
+      - name: build XSPdb
+        run: |
+          make pdb
+      - name: upload XiangShan binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: build xspdb
+          path: build/xspdb/
+jobs:
+  release-xspdb:
+    runs-on: bosc
+    if: github.event.pull_request.merged == true
+    container: ghcr.io/openxiangshan/xspdb:build-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set env
+        run: |
+          echo "NOOP_HOME=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          echo "PDB_HOME=${GITHUB_WORKSPACE}/build/xspdb" >> $GITHUB_ENV
+          FILE_TIME=$(date +%Y%m)
+          FILE_SHA=$(git rev-parse --short HEAD)
+          FILE_NAME="XSPdb-${FILE_TIME}-${FILE_SHA}.tar.gz"
+          echo "FILE_PATH=${PDB_HOME}/${FILE_NAME}" >> $GITHUB_ENV
+      - name: download XiangShan binary
+        uses: actions/download-artifact@v4
+        with:
+          name: build-xspdb
+          path: build/xspdb 
+      - name: archive XSPdb
+        run: |
+          make package-pdb
+      - name: create gitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: release-${{ github.sha }}
+          name: Release ${{ github.sha }}
+          body: |
+            xspdb created upon merge to master.
+            Commit: `${{ github.sha }}`
+          files: ${FILE_PATH}
+          prerelease: false

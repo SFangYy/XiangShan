@@ -149,7 +149,6 @@ class XSPdb(pdb.Pdb):
                 delta = delta - c
                 self.check_is_need_trace()
                 delta_time = time.time() - time_start
-                print ("step py cycle")
                 if delta_time > args.max_run_time and args.max_run_time > 0:
                     cycle_reach_max_time = True
                     XSPdb.info(f"Max run time {timesec_to_str(args.max_run_time)} reached (runed {timesec_to_str(delta_time)}), exit cycle execution")
@@ -166,6 +165,7 @@ class XSPdb(pdb.Pdb):
 
     def run(self, args):
         self.__init_pdb(args)
+        print("batch mod is ", args.batch)
         try:
             if args.batch:
                 self.__run_batch(args)
