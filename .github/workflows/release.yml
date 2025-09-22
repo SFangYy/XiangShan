@@ -55,15 +55,19 @@ jobs:
         run: |
           echo "NOOP_HOME=$GITHUB_WORKSPACE" >> $GITHUB_ENV
           echo "PDB_HOME=${GITHUB_WORKSPACE}/build/xspdb" >> $GITHUB_ENV
-          echo "PATH=/nfs/tools/picker/bin:$PATH" >> $GITHUB_ENV
           FILE_TIME=$(date +%Y%m)
           FILE_SHA=$(git rev-parse --short HEAD)
           FILE_NAME="XSPdb-${FILE_TIME}-${FILE_SHA}.tar.bz2"
           echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
       - name: submodule init
         run: make init
+      - name: check picker availability
+        run: |
+          echo "Checking picker command..."
+          ls -la /nfs/share/unitychip/bin/ || echo "❌ Cannot list /nfs/share/unitychip/bin/"
       - name: build XSPdb 
         run: |
+          source /nfs/share/unitychip/activate
           make pdb
           make package-pdb
           mv ${{ env.PDB_HOME}}/XSPdb.tar.bz2 "${{ env.PDB_HOME }}/${{ env.FILE_NAME }}"
@@ -91,6 +95,10 @@ jobs:
           path: build/xspdb/
       - name: test run pdb
         run: |
+          source /nfs/share/unitychip/activate
+          cd build/xspdb
+          tar -xjf "${{ needs.build-xspdb.outputs.file-name }}"
+          cd XSPdb
           make pdb-run
 
   release-xspdb:
@@ -104,12 +112,6 @@ jobs:
         with:
           name: build-xspdb
           path: build/xspdb/
-      - name: test and release XSPdb
-        run: |
-          cd build/xspdb
-          tar -xjf "${{ needs.build-xspdb.outputs.file-name }}"
-          cd XSPdb
-          make pdb-run
       - name: upload final release
         uses: actions/upload-artifact@v4
         with:
